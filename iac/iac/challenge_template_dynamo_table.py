@@ -12,7 +12,7 @@ class TemplateDynamoTable(Construct):
         super().__init__(scope, construct_id, **kwargs)
 
         self.table = dynamodb.Table(
-            self, "ChallengeTemplateDynamoTable",
+            self, "desafio_back_2_geraldo",
             partition_key=dynamodb.Attribute(
                 name="PK",
                 type=dynamodb.AttributeType.STRING
