@@ -54,5 +54,13 @@ class LambdaStack(Construct):
             environment_variables=environment_variables
         )
 
+        
+        self.challenge_function = self.create_lambda_api_gateway_integration(
+            module_name="recommendations",
+            method="POST",
+            mss_student_api_resource=api_gateway_resource,
+            environment_variables=environment_variables
+        )
+
         self.functions_that_need_ses_permissions = [self.challenge_function]
         self.functions_that_need_s3_permissions = [self.challenge_function]
