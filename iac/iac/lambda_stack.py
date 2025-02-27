@@ -44,6 +44,15 @@ class LambdaStack(Construct):
             mss_student_api_resource=api_gateway_resource,
             environment_variables=environment_variables
         )
+        
+        #conversa com a aws definindo a rota
+        self.challenge_function = self.create_lambda_api_gateway_integration(
+            #mostra o nome da pasta onde esta a rota
+            module_name="purchase",
+            method="POST",
+            mss_student_api_resource=api_gateway_resource,
+            environment_variables=environment_variables
+        )
 
         self.functions_that_need_ses_permissions = [self.challenge_function]
         self.functions_that_need_s3_permissions = [self.challenge_function]
