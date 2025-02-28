@@ -36,14 +36,6 @@ class LambdaStack(Construct):
                                                  code=lambda_.Code.from_asset("./lambda_layer_out_temp"),
                                                  compatible_runtimes=[lambda_.Runtime.PYTHON_3_9]
                                                  )
-
-
-        self.challenge_function = self.create_lambda_api_gateway_integration(
-            module_name="challenge_template",
-            method="GET",
-            mss_student_api_resource=api_gateway_resource,
-            environment_variables=environment_variables
-        )
         
         #conversa com a aws definindo a rota
         self.challenge_function = self.create_lambda_api_gateway_integration(
@@ -57,6 +49,13 @@ class LambdaStack(Construct):
         
         self.challenge_function = self.create_lambda_api_gateway_integration(
             module_name="recommendations",
+            method="POST",
+            mss_student_api_resource=api_gateway_resource,
+            environment_variables=environment_variables
+        )
+
+        self.challenge_function = self.create_lambda_api_gateway_integration(
+            module_name="purchase_summary",
             method="POST",
             mss_student_api_resource=api_gateway_resource,
             environment_variables=environment_variables
