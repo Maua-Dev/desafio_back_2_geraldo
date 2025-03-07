@@ -20,9 +20,22 @@ class PurchaseUsecase:
         if self.repo.create_purchase(purchase=purchase) is not None:
             raise DuplicatedItem("Purchase already exists")
         
+        if self.repo.create_purchase(user_id != str, product_id != str, category != str, price != float, purchase_date != int) is not None:
+            raise ForbiddenAction("Purchase types unexpected")
+        
         if self.repo.create_purchase(price <= 0) is not None:
             raise ForbiddenAction("Price can't be 0 or lower")
         
+        if self.repo.create_purchase(purchase_date <= 0) is not None:
+            raise ForbiddenAction("Purchase_date can't be 0 or lower")
+        
+        if self.repo.create_purchase(price > 1000000) is not None:
+            raise ForbiddenAction("Price can't be 0 or lower")
+        
+        if self.repo.get_category_from_user_id(purchase=purchase) is not None:
+            raise DuplicatedItem("Purchase already exists")
+        
+
         
         purchase = Purchase(user_id=user_id, product_id = product_id, category=category, price=price,purchase_date=purchase_date)
 
