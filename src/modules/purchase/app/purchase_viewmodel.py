@@ -13,7 +13,7 @@ class PurchaseViewmodel:
     def __init__(self, purchase: Purchase):
         self.user_id = purchase.user_id
         self.product_id = purchase.product_id
-        self.category = purchase.cateogry
+        self.category = purchase.category
         self.price = purchase.price
         self.purchase_date = purchase.purchase_date
 
