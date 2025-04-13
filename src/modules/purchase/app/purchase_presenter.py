@@ -1,14 +1,14 @@
-from src.modules.create_schedule.app.create_schedule_controller import CreateScheduleController
-from src.modules.create_schedule.app.create_schedule_usecase import CreateScheduleUsecase
+from src.modules.purchase.app.purchase_controller import purchase_controller
+from src.modules.purchase.app.purchase_usecase import purchase_usecase
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
 repo_user = Environments.get_user_repo()()
 repo_schedule = Environments.get_order_repo()()
-usecase = CreateScheduleUsecase(repo_schedule=repo_schedule, repo_user=repo_user)
-controller = CreateScheduleController(usecase)
+usecase = purchase_usecase(repo_schedule=repo_schedule, repo_user=repo_user)
+controller = purchase_controller(usecase)
 
-def create_schedule_presenter(event, context):
+def purchase_presenter(event, context):
 
     httpRequest = LambdaHttpRequest(data=event)
     httpRequest.data['requester_user'] = event.get('requestContext', {}).get('authorizer', {}).get('claims', None)
@@ -19,6 +19,7 @@ def create_schedule_presenter(event, context):
 
 def lambda_handler(event, context):
     
-    response = create_schedule_presenter(event, context)
+    response = purchase_presenter(event, context)
    
     return response
+
