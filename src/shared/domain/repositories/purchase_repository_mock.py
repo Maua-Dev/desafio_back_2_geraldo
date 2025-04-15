@@ -26,12 +26,6 @@ class PurchaseRepositoryMock(IChallengeRepository):
         self.purchase_list.append(purchase)
         return purchase
     
-    
-    def purchase_already_exists(self, purchase: Purchase) -> bool:
-
-        pass
-
-    
     def get_category_from_user_id(self, user_id: str) -> Optional[List[str]]:
         categories = [
             purchase.category.value
@@ -50,4 +44,19 @@ class PurchaseRepositoryMock(IChallengeRepository):
 
     
     def get_purchase_from_user_id_and_interval(self,user_id: str, start_date: int, end_date: int) -> Optional[List[str]]:
-        pass
+        categories = [
+            purchase.category.value
+            for purchase in self.purchase_list
+            if purchase.user_id == user_id and start_date <= purchase.purchase_date <= end_date
+        ]
+
+        if not categories:
+            return None
+
+        counter = Counter(categories)
+        max_count = max(counter.values())
+        most_common_categories = [cat for cat, count in counter.items() if count == max_count]
+
+        return most_common_categories
+    
+    

@@ -12,10 +12,6 @@ class IChallengeRepository(ABC):
         pass
 
     @abstractmethod
-    def purchase_already_exists(self, purchase: Purchase) -> bool:
-        pass
-
-    @abstractmethod
     def get_category_from_user_id(self, user_id: str) -> Optional[List[str]]:
         pass
 
