@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
+from src.shared.domain.entities.purchase import Purchase
 
-from src.shared.domain.entities import Purchase
 
 
 
