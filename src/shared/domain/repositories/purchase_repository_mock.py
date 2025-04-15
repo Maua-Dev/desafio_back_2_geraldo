@@ -58,5 +58,3 @@ class PurchaseRepositoryMock(IChallengeRepository):
         most_common_categories = [cat for cat, count in counter.items() if count == max_count]
 
         return most_common_categories
-    
-    
