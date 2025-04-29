@@ -17,7 +17,7 @@ class Test_PurchaseController:
             body={
                 "user_id": "3c0c67a5-2dc4-4b90-be13-73b7d29718f0",
                 "product_id": "b5466cbf-581e-4f65-885f-247d03c96602",
-                "category": CATEGORY.CLOTHES,
+                "category": CATEGORY.CLOTHES.value,
                 "price": 50.0,
                 "purchase_date": 1744644600
             },

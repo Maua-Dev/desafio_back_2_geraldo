@@ -18,5 +18,5 @@ class PurchaseUsecase:
         
         purchase = Purchase(user_id=user_id, product_id = product_id, category=category, price=price,purchase_date=purchase_date)
         
-        return self.repo.create_purchase(purchase)
+        return self.repo.create_purchase(purchase=purchase)
 

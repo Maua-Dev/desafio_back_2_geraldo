@@ -1,12 +1,11 @@
-from src.modules.purchase.app.purchase_controller import purchase_controller
-from src.modules.purchase.app.purchase_usecase import purchase_usecase
+from src.modules.purchase.app.purchase_controller import PurchaseController
+from src.modules.purchase.app.purchase_usecase import PurchaseUsecase
 from src.shared.environments import Environments
 from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 
-repo_user = Environments.get_user_repo()()
-repo_schedule = Environments.get_order_repo()()
-usecase = purchase_usecase(repo_schedule=repo_schedule, repo_user=repo_user)
-controller = purchase_controller(usecase)
+repo_purchase = Environments.get_purchase_repo()()
+usecase = PurchaseUsecase(repo=repo_purchase)
+controller = PurchaseController(usecase)
 
 def purchase_presenter(event, context):
 

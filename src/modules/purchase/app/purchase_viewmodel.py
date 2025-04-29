@@ -13,7 +13,7 @@ class PurchaseViewmodel:
     def __init__(self, purchase: Purchase):
         self.user_id = purchase.user_id
         self.product_id = purchase.product_id
-        self.category = purchase.category
+        self.category = purchase.category.value if hasattr(purchase.category, 'value') else purchase.category
         self.price = purchase.price
         self.purchase_date = purchase.purchase_date
 
@@ -22,10 +22,9 @@ class PurchaseViewmodel:
             'purchase': {
                 'user_id': self.user_id,
                 'product_id': self.product_id,
-                'category': self.category,
+                'category': self.category if isinstance(self.category, str) else self.category.value,
                 'price': self.price,
                 'purchase_date': self.purchase_date
             },
-
             'message': "the purchase has been created"
         }

@@ -5,6 +5,7 @@ import os
 from src.shared.domain.repositories.challenge_repository_interface import IChallengeRepository
 
 
+
 class STAGE(Enum):
     DOTENV = "DOTENV"
     DEV = "DEV"
@@ -61,15 +62,25 @@ class Environments:
             self.cloud_front_distribution_domain = os.environ.get("CLOUD_FRONT_DISTRIBUTION_DOMAIN")
 
     @staticmethod
-    def get_user_repo() -> IChallengeRepository:
+    def get_purchase_repo() -> IChallengeRepository:
         if Environments.get_envs().stage == STAGE.TEST:
-            from src.shared.infra.repositories.challenge_repository_mock import ChallengeRepositoryMock
-            return ChallengeRepositoryMock
+            from src.shared.domain.repositories.purchase_repository_mock import PurchaseRepositoryMock 
+            return PurchaseRepositoryMock
         elif Environments.get_envs().stage in [STAGE.DEV, STAGE.HOMOLOG, STAGE.PROD]:
             from src.shared.infra.repositories.challenge_repository_dynamo import ChallengeRepositoryDynamo
             return ChallengeRepositoryDynamo
         else:
             raise Exception("No repository found for this stage")
+        
+    @staticmethod
+    def get_challenge_repo() -> IChallengeRepository:
+        if Environments.GLOBAL_ENV == Environments.TEST:
+            from src.shared.domain.repositories.purchase_repository_mock import PurchaseRepositoryMock 
+            return PurchaseRepositoryMock
+        else:
+            from src.shared.infra.repositories.challenge_repository_dynamo import ChallengeRepositoryDynamo
+            return ChallengeRepositoryDynamo
+
 
     @staticmethod
     def get_envs() -> "Environments":
