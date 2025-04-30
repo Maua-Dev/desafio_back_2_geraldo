@@ -3,6 +3,7 @@ import pytest
 from src.shared.domain.entities.purchase import Purchase
 from src.shared.domain.enums.category_enum import CATEGORY
 from src.shared.domain.repositories.purchase_repository_mock import PurchaseRepositoryMock
+from src.shared.helpers.errors.domain_errors import EntityError
 
 class Test_purchase_repository_mock:
 
@@ -25,9 +26,10 @@ class Test_purchase_repository_mock:
     def test_get_category_from_user_id_none(self):
         repo = PurchaseRepositoryMock()
 
-        result = repo.get_category_from_user_id("3cc67a5-2dc4-4b90-be13-73b7d29718f0")
+        with pytest.raises(EntityError):
+            repo.get_category_from_user_id("3cc67a5-2dc4-4b90-be13-73b7d29718f0")
+        
 
-        assert result == None
 
     def test_get_purchase_from_user_id_and_interval(self):
         repo = PurchaseRepositoryMock()

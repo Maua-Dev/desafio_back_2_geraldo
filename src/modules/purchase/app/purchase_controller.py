@@ -41,7 +41,6 @@ class PurchaseController:
             return Forbidden(body=error.message)
         
         except Exception as error:
-            print("DEBUG - EXCEPTION LANÇADA:", error)
             return InternalServerError(body=error.args[0])
 
 

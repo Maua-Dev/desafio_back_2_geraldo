@@ -2,14 +2,14 @@ import json
 import time
 import pytest
 
-from src.modules.purchase.app.purchase_presenter import lambda_handler
+from src.modules.recommendations.app.recommendations_presenter import lambda_handler
 
-class Test_PurchasePresenter:
-    def test_purchase_presenter(self):
+class Test_RecommendationsPresenter:
+    def test_recommendations_presenter(self):
         event = {
             "version": "2.0",
             "routeKey": "$default",
-            "rawPath": "/purchase",
+            "rawPath": "/recommendations",
             "headers": {},
             "requestContext": {
                 "authorizer": {
@@ -23,30 +23,23 @@ class Test_PurchasePresenter:
             },
             "body": json.dumps({
                 "user_id": "3c0c67a5-2dc4-4b90-be13-73b7d29718f0",
-                "product_id": "7aa45600-3e44-46ca-8064-aa90874288cf",
-                "category": "CLOTHES",
-                "price": 25.0,
-                "purchase_date": int(time.time())
+                "preferences": ["CLOTHES", "ELECTRONICS"],
             }),
             "isBase64Encoded": False
         }
 
         response = lambda_handler(event, None)
 
-        assert response["statusCode"] == 201
+        assert response["statusCode"] == 200  
         body = json.loads(response["body"])
-        assert body["message"] == "the purchase has been created"
-        assert body["purchase"]["user_id"] == "3c0c67a5-2dc4-4b90-be13-73b7d29718f0"
-        assert body["purchase"]["product_id"] == "7aa45600-3e44-46ca-8064-aa90874288cf"
-        assert body["purchase"]["category"] == "CLOTHES"
-        assert body["purchase"]["price"] == 25.0
-        assert isinstance(body["purchase"]["purchase_date"], int)
+        assert body["message"] == "Success"  
+        assert isinstance(body["recommended_categories"], list)  
 
-    def test_purchase_presenter_missing_field(self):
+    def test_recommendations_presenter_missing_field(self):
         event = {
             "version": "2.0",
             "routeKey": "$default",
-            "rawPath": "/purchase",
+            "rawPath": "/recommendations",
             "headers": {},
             "requestContext": {
                 "authorizer": {
@@ -59,13 +52,12 @@ class Test_PurchasePresenter:
                 }
             },
             "body": json.dumps({
-                "product_id": "7aa45600-3e44-46ca-8064-aa90874288cf",
-                "category": "CLOTHES",
-                "price": 25.0
-                # Falta o campo "purchase_date"
+                "preferences": ["CLOTHES", "ELECTRONICS"],
+                # Falta o campo "user_id"
             }),
             "isBase64Encoded": False
         }
 
         response = lambda_handler(event, None)
-        assert response["statusCode"] == 403  # ou o código correto de erro para o campo ausente
+        assert response["statusCode"] == 403  
+

@@ -1,5 +1,3 @@
-from src.shared.environments import Environments
-from src.shared.helpers.external_interfaces.http_lambda_requests import LambdaHttpRequest, LambdaHttpResponse
 from src.shared.domain.entities import Purchase
 
 

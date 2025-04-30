@@ -68,4 +68,4 @@ class Test_PurchasePresenter:
         }
 
         response = lambda_handler(event, None)
-        assert response["statusCode"] == 403  # ou o código correto de erro para o campo ausente
+        assert response["statusCode"] == 403  
