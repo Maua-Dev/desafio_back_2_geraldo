@@ -28,15 +28,6 @@ class Test_purchase_repository_mock:
 
         with pytest.raises(EntityError):
             repo.get_category_from_user_id("3cc67a5-2dc4-4b90-be13-73b7d29718f0")
-        
-
-
-    def test_get_purchase_from_user_id_and_interval(self):
-        repo = PurchaseRepositoryMock()
-
-        result = repo.get_purchase_from_user_id_and_interval("3c0c67a5-2dc4-4b90-be13-73b7d29718f0", 0, 2000000000000)
-
-        assert result == ["CLOTHES"]
 
     def test_get_purchase_from_user_id_and_interval_none(self):
         repo = PurchaseRepositoryMock()
@@ -44,4 +35,28 @@ class Test_purchase_repository_mock:
         result = repo.get_purchase_from_user_id_and_interval("3c0c67a5-2dc4-4b90-be13-73b7d29718f0", 3000000000000, 2000000000000)
 
         assert result == None
+
+    def test_get_purchase_from_user_id_and_interval(self):
+        repo = PurchaseRepositoryMock()
+        result = repo.get_purchase_from_user_id_and_interval("3c0c67a5-2dc4-4b90-be13-73b7d29718f0", 0, 2000000000000)
+        
+        assert result == {
+            'user_id': '3c0c67a5-2dc4-4b90-be13-73b7d29718f0',
+            'start_date': 0,
+            'end_date': 2000000000000,
+            'total_spent': 250.0, 
+            'total_purchases': 4,  
+            'category_breakdown': {
+                'CLOTHES': {
+                    'amount_spent': 150.0,
+                    'count': 3
+                },
+                'ELECTRONIC': {
+                    'amount_spent': 100.0,
+                    'count': 1
+                }
+            },
+        }
+
+
 
