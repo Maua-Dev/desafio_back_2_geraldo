@@ -4,6 +4,7 @@ from collections import Counter
 from src.shared.domain.entities.purchase import Purchase
 from src.shared.domain.enums.category_enum import CATEGORY
 from src.shared.domain.repositories.challenge_repository_interface import IChallengeRepository
+from src.shared.helpers.errors.domain_errors import EntityError
 
 class PurchaseRepositoryMock(IChallengeRepository):
     pruchase_list: list[Purchase] 
@@ -34,7 +35,7 @@ class PurchaseRepositoryMock(IChallengeRepository):
         ]
 
         if not categories:
-            return None
+            raise EntityError("User ID not found")
 
         counter = Counter(categories)
         max_count = max(counter.values())
