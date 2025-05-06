@@ -1,7 +1,6 @@
 import pytest
 
 from src.modules.purchase_summary.app.purchase_summary_usecase import PurchaseSummaryUsecase
-from src.shared.domain.repositories.challenge_repository_interface import IChallengeRepository
 from src.shared.domain.enums.category_enum import CATEGORY
 from src.shared.domain.repositories.purchase_repository_mock import PurchaseRepositoryMock
 
