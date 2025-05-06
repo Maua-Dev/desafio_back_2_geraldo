@@ -32,15 +32,31 @@ class LambdaStack(Construct):
     def __init__(self, scope: Construct, api_gateway_resource: Resource, environment_variables: dict) -> None:
         super().__init__(scope, "Template_Lambdas")
 
-        self.lambda_layer = lambda_.LayerVersion(self, "ChallengeTemplate_Layer",
+        self.lambda_layer = lambda_.LayerVersion(self, "desafio_back_2_geraldo_Layer",
                                                  code=lambda_.Code.from_asset("./lambda_layer_out_temp"),
                                                  compatible_runtimes=[lambda_.Runtime.PYTHON_3_9]
                                                  )
+        
+        #conversa com a aws definindo a rota
+        self.challenge_function = self.create_lambda_api_gateway_integration(
+            #mostra o nome da pasta onde esta a rota
+            module_name="purchase",
+            method="POST",
+            mss_student_api_resource=api_gateway_resource,
+            environment_variables=environment_variables
+        )
 
+        
+        self.challenge_function = self.create_lambda_api_gateway_integration(
+            module_name="recommendations",
+            method="POST",
+            mss_student_api_resource=api_gateway_resource,
+            environment_variables=environment_variables
+        )
 
         self.challenge_function = self.create_lambda_api_gateway_integration(
-            module_name="challenge_template",
-            method="GET",
+            module_name="purchase_summary",
+            method="POST",
             mss_student_api_resource=api_gateway_resource,
             environment_variables=environment_variables
         )
